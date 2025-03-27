@@ -49,7 +49,7 @@ export default function AssemblyEndgame() {
 
       return <span className={`h-[40px] w-[40px] bg-[#323232] flex justify-center items-center text-2xl border-b-1 border-b-[#F9FADA] ${missedLatters ? 'text-[#EC5D49]' : ''}`}
         key={index}>{isGameLost ? letter.toUpperCase() : guessedLetters.includes(letter) ? letter.toUpperCase() : ''}</span>
-});
+}); 
     
     const keyboardElements = alphabet.split("").map(letter => {
       const isGuessed = guessedLetters.includes(letter);
