@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { languages } from "./languages"
-import { getFarewellText } from "./utils";
+import { getFarewellText, getRandomWord } from "./utils";
 
 export default function AssemblyEndgame() {
-    const [currentWord, setCurrentWord] = useState("react");
+    const [currentWord, setCurrentWord] = useState(() => getRandomWord());
     const [guessedLetters, setGuessedLetters] = useState([]);
     
-    const numGuessesLeft = languages.length - 1
+    const numGuessesLeft = languages.length - 1;
     const wrongGuessedCount = guessedLetters.filter((letter) => !currentWord.includes(letter)).length;
     const isGameLost = wrongGuessedCount > numGuessesLeft;
     const isGameWon = currentWord.split("").every(letter => guessedLetters.includes(letter));
@@ -44,10 +44,12 @@ export default function AssemblyEndgame() {
       setGuessedLetters(prevLetters => prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]);
     }
 
-    const letterElements = currentWord.split("").map((letter, index) => (
-        <span className="h-[40px] w-[40px] bg-[#323232] flex justify-center items-center text-2xl border-b-1
-        " key={index}>{guessedLetters.includes(letter) ? letter.toUpperCase() : ''}</span>
-    ));
+    const letterElements = currentWord.split("").map((letter, index) => {
+      const missedLatters = isGameLost && !guessedLetters.includes(letter);
+
+      return <span className={`h-[40px] w-[40px] bg-[#323232] flex justify-center items-center text-2xl border-b-1 border-b-[#F9FADA] ${missedLatters ? 'text-[#EC5D49]' : ''}`}
+        key={index}>{isGameLost ? letter.toUpperCase() : guessedLetters.includes(letter) ? letter.toUpperCase() : ''}</span>
+});
     
     const keyboardElements = alphabet.split("").map(letter => {
       const isGuessed = guessedLetters.includes(letter);
@@ -56,11 +58,16 @@ export default function AssemblyEndgame() {
       return (
         <button disabled={isGameOver} aria-disabled={guessedLetters.includes(letter)} aria-label={`Letter ${letter}`}
           onClick={() => addGuessedLetter(letter)} className={` ${isCorrect ? "bg-[#10A95B]" : isWrong ? "bg-[#EC5D49]" : "bg-[#FCBA29]"}
-          h-[35px] w-[35px] border-2 border-[#F9FADA] rounded-[3px]  cursor-pointer text-[#323232]`}
+          h-[35px] w-[35px] border-2 border-[#F9FADA] rounded-[3px] cursor-pointer text-[#323232]`}
         key={letter}>{letter.toUpperCase()}</button>
       )
         
     });
+
+    function handleNewGame() {
+      setCurrentWord(getRandomWord());
+      setGuessedLetters([]);
+    }
 
     
 
@@ -123,7 +130,7 @@ export default function AssemblyEndgame() {
               {keyboardElements}
           </section>
           {
-            isGameOver && <button className="bg-[#11B5E5] rounded-[4px] border-2 border-[#D7D7D7] w-[225px] h-[40px]
+            isGameOver && <button onClick={handleNewGame} className="bg-[#11B5E5] rounded-[4px] border-2 border-[#D7D7D7] w-[225px] h-[40px]
               py-[5px] px-[12px] block mx-[auto] cursor-pointer
               ">New Game</button>
           }
