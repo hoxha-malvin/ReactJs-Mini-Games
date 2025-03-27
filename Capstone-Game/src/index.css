@@ -28,3 +28,8 @@ body {
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
 }
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5
+}
