@@ -6,9 +6,9 @@ export default function AssemblyEndgame() {
     const [currentWord, setCurrentWord] = useState("react");
     const [guessedLetters, setGuessedLetters] = useState([]);
     
-
+    const numGuessesLeft = languages.length - 1
     const wrongGuessedCount = guessedLetters.filter((letter) => !currentWord.includes(letter)).length;
-    const isGameLost = wrongGuessedCount > 7;
+    const isGameLost = wrongGuessedCount > numGuessesLeft;
     const isGameWon = currentWord.split("").every(letter => guessedLetters.includes(letter));
     const isGameOver = isGameWon || isGameLost;
 
@@ -54,7 +54,8 @@ export default function AssemblyEndgame() {
       const isCorrect = isGuessed && currentWord.includes(letter);
       const isWrong = isGuessed && !currentWord.includes(letter);
       return (
-        <button disabled={isGameOver} aria-disabled={isGameOver} onClick={() => addGuessedLetter(letter)} className={` ${isCorrect ? "bg-[#10A95B]" : isWrong ? "bg-[#EC5D49]" : "bg-[#FCBA29]"}
+        <button disabled={isGameOver} aria-disabled={guessedLetters.includes(letter)} aria-label={`Letter ${letter}`}
+          onClick={() => addGuessedLetter(letter)} className={` ${isCorrect ? "bg-[#10A95B]" : isWrong ? "bg-[#EC5D49]" : "bg-[#FCBA29]"}
           h-[35px] w-[35px] border-2 border-[#F9FADA] rounded-[3px]  cursor-pointer text-[#323232]`}
         key={letter}>{letter.toUpperCase()}</button>
       )
@@ -96,12 +97,28 @@ export default function AssemblyEndgame() {
 
               
           </section>
-          <section className="flex flex-wrap gap-[5px] justify-center max-w-[350px] mx-auto mb-[36px]">
+          <section
+              aria-live="polite" 
+              role="status"
+              className="flex flex-wrap gap-[5px] justify-center max-w-[350px] mx-auto mb-[36px]"
+            >
               {languageElements}
           </section>
           <section className="flex justify-center gap-[2px] mb-[20px]">
               {letterElements}
           </section>
+
+          <section className="sr-only" aria-live="polite" role="status">
+            <p>
+              {currentWord.includes(lastGuessedLetter) ? 
+                  `Correct! The letter ${lastGuessedLetter} is in the word.` : 
+                  `Sorry, the letter ${lastGuessedLetter} is not in the word.`
+              }
+              You have {numGuessesLeft} attempts left.
+            </p>
+            <p>Current word: {currentWord.split("").map(letter => guessedLetters.includes(letter) ? letter + "." : "blank.").join(" ")}</p>
+          </section>
+
           <section className="flex flex-wrap gap-[8px] justify-center max-w-[450px] mb-[36px]">
               {keyboardElements}
           </section>
