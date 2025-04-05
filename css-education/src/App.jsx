@@ -73,7 +73,7 @@ const App = () => {
   
     {/* Right Side */}
     <aside className="w-full flex-1 flex items-center justify-center p-10">
-      <div className="relative bg-white/30 backdrop-blur-md border border-white/40 shadow-2xl rounded-3xl sm:p-10 w-full max-w-3xl h-[70vh] flex items-center justify-center transition-all duration-300 ease-in-out">
+      <div className="relative bg-white/30 backdrop-blur-md border border-white/40 shadow-2xl rounded-3xl sm:p-10 w-full h-[70vh] flex items-center justify-center transition-all duration-300 ease-in-out">
         {/* Frog + Effects Container */}
         <div className={`w-full h-full flex items-center  relative transition-all duration-300 ease-in-out ${correctAnswer}`}>
           {/* Main character */}
@@ -113,14 +113,17 @@ function Compiler({userInput, setUserInput, changePage, isCorrect}) {
           {contents.map((content, index) => (
             <div key={index}>{content.trim()};</div>
           ))}
-
-          <input
-            type="text"
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            style={{ caretColor: 'black' }}
-            className='bg-[#fff] text-[#000] w-[250px] outline-none pl-1'
-          />
+          
+          <div>
+            <input
+              type="text"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              style={{ caretColor: 'black' }}
+              className='bg-[#fff] text-[#000] w-full max-w-[250px] outline-none pl-1'
+            />
+          </div>
+          
         </div>
         <span>{"}"}</span>
         <div className='mt-10 flex gap-2'>
