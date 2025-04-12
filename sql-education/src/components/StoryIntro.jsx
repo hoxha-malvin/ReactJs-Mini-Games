@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import darthVader from '../assets/darth-vader.svg';
 import yoda from '../assets/yoda.svg';
 import table from "../data/table";
@@ -15,6 +15,8 @@ const StoryIntro = () => {
   const [userSQL, setUserSQL] = useState("");
   const [userResult, setUserResult] = useState([]); 
   const [queryError, setQueryError] = useState("");
+   
+  const isCorrect = userSQL.trim().toLowerCase() === tasks.expected_sql.trim().toLowerCase();
 
   useEffect(() => {
     (async () => {
@@ -119,8 +121,44 @@ const StoryIntro = () => {
               <p className="p-2 text-amber-200 italic text-center text-xl rounded-lg bg-zinc-700 border border-zinc-600">{`Example: ${tasks.example_sql}`}</p>
             </div>
 
+            <div>
+              <h1>{isCorrect ? 'CORRECT' : "WRONG"}</h1>
+            </div>
+
             <h2 className="text-2xl font-semibold text-amber-400 mt-6">Query Output</h2>
             {queryError && <p className="text-red-400 italic">{queryError}</p>}
+            {userResult.length > 0 && (
+              <div className="mt-6">
+                <h2 className="text-xl font-semibold text-amber-400 mb-2">Your Query Result</h2>
+                {userResult[0].error ? (
+                  <p className="text-red-400 italic">{userResult[0].error}</p>
+                ) : (
+                  <table className="w-full table-auto border-collapse text-sm">
+                    <thead className="bg-zinc-700 text-amber-300">
+                      <tr>
+                        {Object.keys(userResult[0]).map((key) => (
+                          <th key={key} className="border border-zinc-600 px-3 py-2 capitalize">
+                            {key}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {userResult.map((row, index) => (
+                        <tr key={index} className="hover:bg-zinc-700 transition-colors">
+                          {Object.values(row).map((value, i) => (
+                            <td key={i} className="border border-zinc-600 px-3 py-2 text-center">
+                              {value}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            )}
+
           </aside>
 
           <aside className="flex-1 bg-zinc-800 rounded-2xl p-6 shadow-lg">
@@ -128,19 +166,20 @@ const StoryIntro = () => {
               <div className="flex items-center space-x-3 mt-4">
                 <img src={yoda} alt="yoda" className="w-10" />
                 <div>
-                <p className="text-amber-200 italic text-xl">{`"${tasks.hint}"`}</p>
+                  <h1 className="text-center text-2xl">QUEST</h1>
+                  <p className="text-amber-200 italic text-xl">{`"${tasks.hint}"`}</p>
                 </div>
                 
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-amber-400">Expected Result</h2>
+                <h2 className="text-2xl font-semibold text-amber-400 mb-4">Expected Result</h2>
                 {tasks.resulted_table.length > 0 ? (
                   <table className="w-full table-auto border-collapse text-sm">
                     <thead className="bg-zinc-700 text-amber-300">
                       <tr>
                         {Object.keys(tasks.resulted_table[0]).map((key) => (
-                          <th key={key} className="border border-zinc-600 px-3 py-2 capitalize">
+                          <th key={key} className="border border-zinc-600 sm:px-3 sm:py-2 capitalize">
                             {key}
                           </th>
                         ))}
@@ -150,7 +189,7 @@ const StoryIntro = () => {
                       {tasks.resulted_table.map((row, index) => (
                         <tr key={index} className="hover:bg-zinc-700 transition-colors">
                           {Object.values(row).map((value, i) => (
-                            <td key={i} className="border border-zinc-600 px-3 py-2 text-center">
+                            <td key={i} className="border border-zinc-600 px-1 sm:px-3 py-2 text-center">
                               {value}
                             </td>
                           ))}
@@ -169,7 +208,7 @@ const StoryIntro = () => {
                   <thead className="bg-zinc-700 text-amber-300">
                     <tr>
                       {Object.keys(table[0]).map((key) => (
-                        <th key={key} className="border border-zinc-600 px-3 py-2 capitalize">
+                        <th key={key} className="border border-zinc-600 sm:px-3 sm:py-2 capitalize">
                           {key}
                         </th>
                       ))}
@@ -179,7 +218,7 @@ const StoryIntro = () => {
                     {table.map((row, index) => (
                       <tr key={index} className="hover:bg-zinc-700 transition-colors">
                         {Object.values(row).map((value, i) => (
-                          <td key={i} className="border border-zinc-600 px-3 py-2 text-center">
+                          <td key={i} className="border border-zinc-600 px-1 sm:px-3 sm:py-2 text-center">
                             {value}
                           </td>
                         ))}
