@@ -1,4 +1,4 @@
-[
+const table = [
     { "id": 1, "name": "Ahsoka Tano", "species": "Togruta", "age": 17, "lightsaber_color": "Green" },
     { "id": 2, "name": "Grogu", "species": "Yoda's Species", "age": 50, "lightsaber_color": "None" },
     { "id": 3, "name": "Ezra Bridger", "species": "Human", "age": 15, "lightsaber_color": "Blue" },
@@ -11,4 +11,6 @@
     { "id": 10, "name": "Plo Koon", "species": "Kel Dor", "age": 50, "lightsaber_color": "Orange" },
     { "id": 11, "name": "Yaddle", "species": "Yoda's Species", "age": 477, "lightsaber_color": "Green" },
     { "id": 12, "name": "Eeth Koth", "species": "Zabrak", "age": 38, "lightsaber_color": "Green" }
-]
+];
+
+export default table;
