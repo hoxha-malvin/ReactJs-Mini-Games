@@ -5,9 +5,10 @@ import table from "../data/table";
 import data from "../data/data";
 import initSqlJs from 'sql.js';
 import padawans from '../data/table';
+import IntroDialogue from "./IntroDialogue";
 
 const StoryIntro = () => {
-  const [showStory, setShowStory] = useState(false);
+  const [showStory, setShowStory] = useState(true);
   const [tableIndex, setTableIndex] = useState(0);
   const tasks = data[tableIndex];
 
@@ -73,21 +74,7 @@ const StoryIntro = () => {
   return (
     <section className="w-full min-h-screen bg-gradient-to-b text-white bg-black/50 backdrop-blur-sm">
       {showStory && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 backdrop-blur-sm p-5">
-          <div className="bg-zinc-900 border border-red-600 rounded-3xl shadow-xl p-8 max-w-xl w-full text-center space-y-4">
-            <img src={darthVader} alt="darth-vader" className="mx-auto w-16 mb-2" />
-            <p className="text-lg font-light text-amber-100">
-              "You are trapped. The only way to escape is to solve the puzzles of the database.
-              Fail, and you will remain in my grasp forever. Your first challenge... begins now."
-            </p>
-            <button
-              onClick={handleClick}
-              className="mt-4 px-6 py-2 bg-red-600 text-white font-semibold rounded-xl shadow-lg hover:bg-red-700 transition-all duration-200 cursor-pointer"
-            >
-              Continue
-            </button>
-          </div>
-        </div>
+        <IntroDialogue onFinish={() => setShowStory(false)} />
       )}
 
       {!showStory && (

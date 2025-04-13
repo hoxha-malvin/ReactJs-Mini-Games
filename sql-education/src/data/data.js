@@ -52,4 +52,37 @@ const data = [
   }
 ];
 
+
+
+export const dialogues = [
+  {
+    speaker: "vader",
+    text: "You are trapped in the SQL prison. You can't escape."
+  },
+  {
+    speaker: "yoda",
+    text: "Simple, the path may not be. But impossible, it is not.",
+  },
+  {
+    speaker: "vader",
+    text: "The only way forward is through knowledge... of SQL.",
+  },
+  {
+    speaker: "yoda",
+    text: "Strong in the database, one must be. Or trapped, one will stay.",
+  },
+  {
+    speaker: "vader",
+    text: "Fail, and you will remain in my grasp forever. As others have before you.",
+  },
+  {
+    speaker: "yoda",
+    text: "Believe in the code, young learner. The Force is with you.",
+  },
+  {
+    speaker: "yoda",
+    text: "Your journey begins. Solve, you must, to be free.",
+  },
+];
+
 export default data;
