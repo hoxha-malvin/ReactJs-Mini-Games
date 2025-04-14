@@ -6,27 +6,30 @@ import data from "../data/data";
 import initSqlJs from 'sql.js';
 import padawans from '../data/table';
 import IntroDialogue from "./IntroDialogue";
+import RightAside from "./RightAside";
+import LeftAside from "./LeftAside";
+import QuestsDialogues from "./QuestsDialogues";
 
 const StoryIntro = () => {
   const [showStory, setShowStory] = useState(true);
   const [tableIndex, setTableIndex] = useState(0);
   const tasks = data[tableIndex];
   const [userSQLMap, setUserSQLMap] = useState({});
-
+  const [isCorrect, setIsCorrect] = useState(null);
 
   const [db, setDb] = useState(null);
   const [userSQL, setUserSQL] = useState("");
   const [userResult, setUserResult] = useState([]); 
   const [queryError, setQueryError] = useState("");
-   
-  const isCorrect = userSQL.trim().toLowerCase() === tasks.expected_sql.trim().toLowerCase();
+
+  const [showQuestDialogue, setShowQuestDialogue] = useState(true);
 
   useEffect(() => {
     setUserSQL(userSQLMap[tableIndex] || "");
     setQueryError("");
     setUserResult([]);
+    setIsCorrect(null);
   }, [tableIndex, userSQLMap]);
-  
 
   useEffect(() => {
     (async () => {
@@ -64,6 +67,7 @@ const StoryIntro = () => {
         const formatted = values.map(row =>
           Object.fromEntries(row.map((val, i) => [columns[i], val]))
         );
+        setIsCorrect(userSQL.trim().toLowerCase() === tasks.expected_sql.trim().toLowerCase());
         setUserResult(formatted);
         setQueryError("");
       } else {
@@ -81,7 +85,8 @@ const StoryIntro = () => {
       if (direction === 'next') return prevIndex < data.length - 1 ? prevIndex + 1 : prevIndex;
       else if (direction === 'previous') return prevIndex > 0 ? prevIndex - 1 : prevIndex;
       return prevIndex;
-    })
+    });
+    setShowQuestDialogue(true);
   }
 
   return (
@@ -92,153 +97,32 @@ const StoryIntro = () => {
 
       {!showStory && (
         <main className="w-full min-h-screen flex flex-col lg:flex-row gap-4 p-6">
+
+          {showQuestDialogue && (
+            <QuestsDialogues 
+              tasks={tasks} 
+              onContinue={() => setShowQuestDialogue(false)} 
+            />
+          )}
           
           {/* Left Panel */}
           <aside className="flex-1 bg-zinc-800 rounded-2xl p-6 shadow-lg space-y-4">
-            <h2 className="text-2xl font-semibold text-amber-400">Command Console</h2>
-
-            <textarea
-              value={userSQL}
-              onChange={(e) => {
-                const val = e.target.value;
-                setUserSQL(val);
-                setUserSQLMap(prev => ({ ...prev, [tableIndex]: val }));
-              }}
-              className="w-full h-40 p-4 rounded-lg bg-zinc-700 text-white border border-zinc-600 focus:outline-none focus:ring-2 focus:ring-amber-400"
-              placeholder="Enter your SQL command..."
+            <LeftAside
+              tableIndex={tableIndex}
+              userSQL={userSQL}
+              handleRunSQL={handleRunSQL}
+              isCorrect={isCorrect}
+              tasks={tasks}
+              queryError={queryError}
+              userResult={userResult}
+              setUserSQL={setUserSQL}
+              setUserSQLMap={setUserSQLMap}
+              ChangePage={ChangePage}
             />
-
-            <button
-              onClick={handleRunSQL}
-              className="px-5 py-2 bg-amber-500 hover:bg-amber-600 transition-all text-black font-bold rounded-xl shadow cursor-pointer">
-              Run Query
-            </button>
-
-            <button
-              onClick={() => ChangePage('next')}
-              className="ml-2 mt-4 px-5 py-2 bg-red-600 text-white font-semibold rounded-xl shadow-lg hover:bg-red-700 transition-all duration-200 cursor-pointer"
-            >
-              Next
-            </button>
-            <button
-              onClick={() => ChangePage('previous')}
-              className="ml-2 mt-4 px-5 py-2 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-200 cursor-pointer"
-            >
-              Previous
-            </button>
-
-            <div className="my-5">
-              <p className="p-2 text-amber-200 italic text-center text-xl rounded-lg bg-zinc-700 border border-zinc-600">{`Example: ${tasks.example_sql}`}</p>
-            </div>
-
-            <div>
-              <h1>{isCorrect ? 'CORRECT' : "WRONG"}</h1>
-            </div>
-
-            <h2 className="text-2xl font-semibold text-amber-400 mt-6">Query Output</h2>
-            {queryError && <p className="text-red-400 italic">{queryError}</p>}
-            {userResult.length > 0 && (
-              <div className="mt-6">
-                <h2 className="text-xl font-semibold text-amber-400 mb-2">Your Query Result</h2>
-                {userResult[0].error ? (
-                  <p className="text-red-400 italic">{userResult[0].error}</p>
-                ) : (
-                  <table className="w-full table-auto border-collapse text-sm">
-                    <thead className="bg-zinc-700 text-amber-300">
-                      <tr>
-                        {Object.keys(userResult[0]).map((key) => (
-                          <th key={key} className="border border-zinc-600 px-3 py-2 capitalize">
-                            {key}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {userResult.map((row, index) => (
-                        <tr key={index} className="hover:bg-zinc-700 transition-colors">
-                          {Object.values(row).map((value, i) => (
-                            <td key={i} className="border border-zinc-600 px-3 py-2 text-center">
-                              {value}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
-              </div>
-            )}
-
           </aside>
 
           <aside className="flex-1 bg-zinc-800 rounded-2xl p-6 shadow-lg">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3 mt-4">
-                <img src={yoda} alt="yoda" className="w-10" />
-                <div>
-                  <h1 className="text-center text-2xl">QUEST</h1>
-                  <p className="text-amber-200 italic text-xl">{`"${tasks.hint}"`}</p>
-                </div>
-                
-              </div>
-
-              <div>
-                <h2 className="text-2xl font-semibold text-amber-400 mb-4">Expected Result</h2>
-                {tasks.resulted_table.length > 0 ? (
-                  <table className="w-full table-auto border-collapse text-sm">
-                    <thead className="bg-zinc-700 text-amber-300">
-                      <tr>
-                        {Object.keys(tasks.resulted_table[0]).map((key) => (
-                          <th key={key} className="border border-zinc-600 sm:px-3 sm:py-2 capitalize">
-                            {key}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tasks.resulted_table.map((row, index) => (
-                        <tr key={index} className="hover:bg-zinc-700 transition-colors">
-                          {Object.values(row).map((value, i) => (
-                            <td key={i} className="border border-zinc-600 px-1 sm:px-3 py-2 text-center">
-                              {value}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : (
-                  <p className="text-amber-200 italic">No results to display.</p>
-                )}
-              </div>
-              
-              <div>
-                <h2 className="text-2xl font-semibold text-amber-400 mb-4">Jedi Data</h2>
-                <table className="w-full table-auto border-collapse text-sm">
-                  <thead className="bg-zinc-700 text-amber-300">
-                    <tr>
-                      {Object.keys(table[0]).map((key) => (
-                        <th key={key} className="border border-zinc-600 sm:px-3 sm:py-2 capitalize">
-                          {key}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {table.map((row, index) => (
-                      <tr key={index} className="hover:bg-zinc-700 transition-colors">
-                        {Object.values(row).map((value, i) => (
-                          <td key={i} className="border border-zinc-600 px-1 sm:px-3 sm:py-2 text-center">
-                            {value}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              
-            </div>
+            <RightAside tableIndex={tableIndex} tasks={tasks} table={table}/>
           </aside>
         </main>
       )}
