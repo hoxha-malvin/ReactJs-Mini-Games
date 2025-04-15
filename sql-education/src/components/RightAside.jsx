@@ -19,7 +19,7 @@ const RightAside = ({tableIndex, tasks, table}) => {
                 <thead className="bg-zinc-700 text-amber-300">
                     <tr>
                     {Object.keys(tasks.resulted_table[0]).map((key) => (
-                        <th key={key} className="border border-zinc-600 sm:px-3 sm:py-2 capitalize">
+                        <th key={key} className="border border-zinc-600 sm:px-3 py-2 capitalize">
                         {key}
                         </th>
                     ))}
@@ -29,7 +29,7 @@ const RightAside = ({tableIndex, tasks, table}) => {
                     {tasks.resulted_table.map((row, index) => (
                     <tr key={index} className="hover:bg-zinc-700 transition-colors">
                         {Object.values(row).map((value, i) => (
-                        <td key={i} className="border border-zinc-600 px-1 sm:px-3 py-2 text-center">
+                        <td key={i} className="border border-zinc-600 sm:px-3 py-2 text-center">
                             {value}
                         </td>
                         ))}
@@ -48,7 +48,7 @@ const RightAside = ({tableIndex, tasks, table}) => {
                     <thead className="bg-zinc-700 text-amber-300">
                         <tr>
                             {Object.keys(table[0]).map((key) => (
-                            <th key={key} className="border border-zinc-600 sm:px-3 sm:py-2 capitalize">
+                            <th key={key} className="border border-zinc-600 sm:px-3 py-2 capitalize">
                                 {key}
                             </th>
                             ))}
@@ -58,7 +58,7 @@ const RightAside = ({tableIndex, tasks, table}) => {
                         {table.map((row, index) => (
                             <tr key={index} className="hover:bg-zinc-700 transition-colors">
                             {Object.values(row).map((value, i) => (
-                                <td key={i} className="border border-zinc-600 px-1 sm:px-3 sm:py-2 text-center">
+                                <td key={i} className="border border-zinc-600 sm:px-3 py-2 text-center">
                                     {value}
                                 </td>
                             ))}

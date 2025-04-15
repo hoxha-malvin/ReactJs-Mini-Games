@@ -2,8 +2,8 @@ import React from 'react'
 import yoda from '/yoda.svg'
 const QuestsDialogues = ({tasks, onContinue}) => {
   return (
-    <main className='min-h-lvh w-full absolute bg-black/50 backdrop-blur-sm inset-0'>
-        <div className="fixed inset-0 flex items-center justify-center z-49 p-5">
+    <main className='fixed bg-black/50 backdrop-blur-sm inset-0 z-50'>
+        <div className="inset-0 min-h-lvh flex items-center justify-center z-49">
             <div className="bg-zinc-900 border border-red-600 rounded-3xl shadow-xl p-8 max-w-xl w-full text-center space-y-4">
                 <div className='flex items-center justify-center gap-4'>
                     <img src={yoda} alt="yoda" className="w-10" />
