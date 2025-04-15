@@ -1,7 +1,9 @@
 import { dialogues } from '../data/data';
-import darthVader from '../assets/darth-vader.svg';
-import yoda from '../assets/yoda.svg';
+import darthVader from '/darth-vader.svg';
+import yoda from '/yoda.svg';
 import { useState } from 'react';
+new Image().src = darthVader;
+new Image().src = yoda;
 
 const IntroDialogue = ({onFinish}) => {
     const [step, setStep] = useState(0);

@@ -1,6 +1,4 @@
 import { useState, useEffect, use } from "react";
-import darthVader from '../assets/darth-vader.svg';
-import yoda from '../assets/yoda.svg';
 import table from "../data/table";
 import data from "../data/data";
 import initSqlJs from 'sql.js';

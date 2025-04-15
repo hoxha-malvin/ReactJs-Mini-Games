@@ -1,4 +1,4 @@
-import yoda from '../assets/yoda.svg';
+import yoda from '/yoda.svg';
 
 const RightAside = ({tableIndex, tasks, table}) => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import yoda from '../assets/yoda.svg'
+import yoda from '/yoda.svg'
 const QuestsDialogues = ({tasks, onContinue}) => {
   return (
     <main className='min-h-lvh w-full absolute bg-black/50 backdrop-blur-sm inset-0'>

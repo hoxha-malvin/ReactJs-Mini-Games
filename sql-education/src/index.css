@@ -11,7 +11,8 @@ html, body, #root {
 
 body {
     width: 100%;
-    background-image: url('/src/assets/background.jpg');
+    background-color: #000; /* Solid fallback while image loads */
+    background-image: url('/background.jpg');
     background-size: cover;
     background-position: center center;
     position: relative;
