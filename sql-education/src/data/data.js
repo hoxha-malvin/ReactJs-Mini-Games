@@ -49,7 +49,88 @@ const data = [
         lightsaber_color: "Green"
       }
     ]
-  }
+  },
+  {
+    id: 5,
+    hint: "Red, the blade must be. Dangerous, they are.",
+    table: "padawans",
+    expected_sql: "SELECT * FROM padawans WHERE lightsaber_color = 'Red';",
+    example_sql: "SELECT * FROM padawans WHERE lightsaber_color = 'Green';",
+    resulted_table: [
+      { id: 5, name: "Reva Sevander", species: "Human", age: 25, lightsaber_color: "Red" }
+    ]
+  },
+  {
+    id: 6,
+    hint: "Wise, the elders are. Older than 100, find them you must.",
+    table: "padawans",
+    expected_sql: "SELECT name FROM padawans WHERE age > 100;",
+    example_sql: "SELECT name FROM padawans WHERE age < 100;",
+    resulted_table: [
+      { name: "Yaddle" }
+    ]
+  },
+  {
+    id: 7,
+    hint: "Masters, 40 years or more, they must be.",
+    table: "padawans",
+    expected_sql: "SELECT * FROM padawans WHERE age >= 40;",
+    example_sql: "SELECT * FROM padawans WHERE age <= 40;",
+    resulted_table: [
+      { id: 7, name: "Kit Fisto", species: "Nautolan", age: 40, lightsaber_color: "Green" },
+      { id: 8, name: "Plo Koon", species: "Kel Dor", age: 50, lightsaber_color: "Orange" },
+      { id: 9, name: "Yaddle", species: "Yoda's Species", age: 477, lightsaber_color: "Green" }
+    ]
+  },
+  {
+    id: 8,
+    hint: "Green blade, and Human — rare, that is.",
+    table: "padawans",
+    expected_sql: "SELECT name FROM padawans WHERE lightsaber_color = 'Green' AND species = 'Human';",
+    example_sql: "SELECT name FROM padawans WHERE lightsaber_color = 'Green';",
+    resulted_table: [
+      { name: "Luke Skywalker" }
+    ]
+  },
+  {
+    id: 9,
+    hint: "Togruta or Zabrak — allies from distant worlds.",
+    table: "padawans",
+    expected_sql: "SELECT name FROM padawans WHERE species = 'Togruta' OR species = 'Zabrak';",
+    example_sql: "SELECT name FROM padawans WHERE species = 'Togruta';",
+    resulted_table: [
+      { name: "Ahsoka Tano" },
+      { name: "Shaak Ti" },
+      { name: "Eeth Koth" }
+    ]
+  },
+  {
+    id: 10,
+    hint: "From many species they come — Togruta, Nautolan, Kel Dor.",
+    table: "padawans",
+    expected_sql: "SELECT name FROM padawans WHERE species IN ('Togruta', 'Nautolan', 'Kel Dor');",
+    example_sql: "SELECT name FROM padawans WHERE species IN ('Human');",
+    resulted_table: [
+      { name: "Ahsoka Tano" },
+      { name: "Shaak Ti" },
+      { name: "Kit Fisto" },
+      { name: "Plo Koon" }
+    ]
+  },
+  {
+    id: 11,
+    hint: "Different, the lightsaber colors are. List them, you must.",
+    table: "padawans",
+    expected_sql: "SELECT DISTINCT lightsaber_color FROM padawans;",
+    example_sql: "SELECT lightsaber_color FROM padawans;",
+    resulted_table: [
+      { lightsaber_color: "Green" },
+      { lightsaber_color: "None" },
+      { lightsaber_color: "Blue" },
+      { lightsaber_color: "Red" },
+      { lightsaber_color: "Orange" }
+    ]
+  } 
 ];
 
 
