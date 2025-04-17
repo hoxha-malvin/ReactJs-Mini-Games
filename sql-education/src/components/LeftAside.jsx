@@ -111,10 +111,11 @@ const LeftAside = ({tableIndex, tasks, ChangePage}) => {
             
 
             <div className="my-5">
-                <p className="p-2 text-amber-200 italic text-center text-xl rounded-lg bg-zinc-700 border border-zinc-600">
-                    {`Example: ${tasks.example_sql}`}
-                </p>
+                <pre className="p-4 text-amber-200 text-start text-base bg-zinc-800 rounded-lg border border-zinc-600 whitespace-pre-wrap">
+                    {tasks.example_sql}
+                </pre>
             </div>
+
 
             <div>
                 {isCorrect !== null && (

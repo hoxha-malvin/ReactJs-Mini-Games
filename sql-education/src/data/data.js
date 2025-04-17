@@ -1,81 +1,31 @@
 const data = [
   {
     id: 1,
-    hint: "Young, the padawans are — less than 20, you seek.",
-    table: "padawans",
-    expected_sql: "SELECT * FROM padawans WHERE age < 20;",
-    example_sql: "SELECT * FROM padawans WHERE age > 30;",
-    resulted_table: [
-      { "id": 1, "name": "Ahsoka Tano", "species": "Togruta", "age": 17, "lightsaber_color": "Green" },
-      { "id": 3, "name": "Ezra Bridger", "species": "Human", "age": 15, "lightsaber_color": "Blue" },
-      { "id": 4, "name": "Luke Skywalker", "species": "Human", "age": 19, "lightsaber_color": "Green" }
-    ]
-  },
-  {
-    id: 2,
-    hint: "The blue blade, only the worthy ignite.",
-    table: "padawans",
-    expected_sql: "SELECT name FROM padawans WHERE lightsaber_color = 'Blue';",
-    example_sql: "SELECT name FROM padawans WHERE lightsaber_color = 'Green';",
-    resulted_table: [
-      { name: "Ezra Bridger" },
-      { name: "Shaak Ti" }
-    ]
-  },
-  {
-    id: 3,
-    hint: "Human, the species must be. Reveal their names.",
-    table: "padawans",
-    expected_sql: "SELECT name FROM padawans WHERE species = 'Human';",
-    example_sql: "SELECT name FROM padawans WHERE species = 'Togruta';",
-    resulted_table: [
-      { name: "Ezra Bridger" },
-      { name: "Luke Skywalker" },
-      { name: "Reva Sevander" }
-    ]
-  },
-  {
-    id: 4,
-    hint: "Oldest padawan, you must find.",
-    table: "padawans",
-    expected_sql: "SELECT * FROM padawans ORDER BY age DESC LIMIT 1;",
-    example_sql: "SELECT * FROM padawans ORDER BY age ASC LIMIT 1;",
-    resulted_table: [
-      {
-        id: 9,
-        name: "Yaddle",
-        species: "Yoda's Species",
-        age: 477,
-        lightsaber_color: "Green"
-      }
-    ]
-  },
-  {
-    id: 5,
-    hint: "Red, the blade must be. Dangerous, they are.",
-    table: "padawans",
-    expected_sql: "SELECT * FROM padawans WHERE lightsaber_color = 'Red';",
-    example_sql: "SELECT * FROM padawans WHERE lightsaber_color = 'Green';",
-    resulted_table: [
-      { id: 5, name: "Reva Sevander", species: "Human", age: 25, lightsaber_color: "Red" }
-    ]
-  },
-  {
-    id: 6,
     hint: "Wise, the elders are. Older than 100, find them you must.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE age > 100;",
-    example_sql: "SELECT name FROM padawans WHERE age < 100;",
+    example_sql: `SQL accepts various inequality symbols, including:
+= "equal to"
+> "greater than"
+< "less than"
+>= "greater than or equal to"
+<= "less than or equal to"
+
+For example:
+SELECT column_name FROM table_name WHERE column_name < value;`,
     resulted_table: [
       { name: "Yaddle" }
     ]
   },
   {
-    id: 7,
+    id: 2,
     hint: "Masters, 40 years or more, they must be.",
     table: "padawans",
     expected_sql: "SELECT * FROM padawans WHERE age >= 40;",
-    example_sql: "SELECT * FROM padawans WHERE age <= 40;",
+    example_sql: `SQL allows you to filter records based on conditions using inequality symbols.
+
+For example:
+SELECT * FROM table_name WHERE column_name <= value;`,
     resulted_table: [
       { id: 7, name: "Kit Fisto", species: "Nautolan", age: 40, lightsaber_color: "Green" },
       { id: 8, name: "Plo Koon", species: "Kel Dor", age: 50, lightsaber_color: "Orange" },
@@ -83,21 +33,27 @@ const data = [
     ]
   },
   {
-    id: 8,
+    id: 3,
     hint: "Green blade, and Human — rare, that is.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE lightsaber_color = 'Green' AND species = 'Human';",
-    example_sql: "SELECT name FROM padawans WHERE lightsaber_color = 'Green';",
+    example_sql: `You can combine multiple conditions using the AND keyword.
+
+For example:
+SELECT column_name FROM table_name WHERE condition1 AND condition2;`,
     resulted_table: [
       { name: "Luke Skywalker" }
     ]
   },
   {
-    id: 9,
+    id: 3,
     hint: "Togruta or Zabrak — allies from distant worlds.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE species = 'Togruta' OR species = 'Zabrak';",
-    example_sql: "SELECT name FROM padawans WHERE species = 'Togruta';",
+    example_sql: `In the WHERE part of a query, you can search for rows that match any of multiple attributes by using the OR keyword.
+
+For example:
+SELECT column_name FROM table_name WHERE condition1 OR condition2;`,
     resulted_table: [
       { name: "Ahsoka Tano" },
       { name: "Shaak Ti" },
@@ -105,11 +61,14 @@ const data = [
     ]
   },
   {
-    id: 10,
+    id: 4,
     hint: "From many species they come — Togruta, Nautolan, Kel Dor.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE species IN ('Togruta', 'Nautolan', 'Kel Dor');",
-    example_sql: "SELECT name FROM padawans WHERE species IN ('Human');",
+    example_sql: `Using the WHERE clause, you can find rows where a value is in a list of several possible values.
+
+For example:
+SELECT column_name FROM table_name WHERE column_name IN (value1, value2, value3);`,
     resulted_table: [
       { name: "Ahsoka Tano" },
       { name: "Shaak Ti" },
@@ -118,11 +77,14 @@ const data = [
     ]
   },
   {
-    id: 11,
+    id: 5,
     hint: "Different, the lightsaber colors are. List them, you must.",
     table: "padawans",
     expected_sql: "SELECT DISTINCT lightsaber_color FROM padawans;",
-    example_sql: "SELECT lightsaber_color FROM padawans;",
+    example_sql: `By putting DISTINCT after SELECT, you prevent duplicates in the results.
+
+For example:
+SELECT DISTINCT column_name FROM table_name;`,
     resulted_table: [
       { lightsaber_color: "Green" },
       { lightsaber_color: "None" },
@@ -130,7 +92,113 @@ const data = [
       { lightsaber_color: "Red" },
       { lightsaber_color: "Orange" }
     ]
-  } 
+  },
+  {
+    id: 6,
+    hint: "Begins with 'Lu', the name must. Seek them, you will.",
+    table: "padawans",
+    expected_sql: "SELECT name FROM padawans WHERE name LIKE 'Lu%';",
+    example_sql: `LIKE lets you match patterns in text.
+Use % as a wildcard for any sequence of characters.
+
+For example:
+SELECT column_name FROM table_name WHERE column_name LIKE 'prefix%';`,
+    resulted_table: [
+      { name: "Luke Skywalker" }
+    ]
+  },
+  {
+    id: 7,
+    hint: "Ends with 'Ti', their names do. Find them, you must.",
+    table: "padawans",
+    expected_sql: "SELECT name FROM padawans WHERE name LIKE '%Ti';",
+    example_sql: `Use % in LIKE to match any ending or beginning.
+
+For example:
+SELECT column_name FROM table_name WHERE column_name LIKE '%suffix';`,
+    resulted_table: [
+      { name: "Shaak Ti" }
+    ]
+  },
+  {
+    id: 8,
+    hint: "Only one letter hidden, the name has. 'A_soka' it must match.",
+    table: "padawans",
+    expected_sql: "SELECT name FROM padawans WHERE name LIKE 'A_soka Tano';",
+    example_sql: `The underscore _ matches exactly one character in LIKE patterns.
+
+For example:
+SELECT column_name FROM table_name WHERE column_name LIKE 'A_c%';`,
+    resulted_table: [
+      { name: "Ahsoka Tano" }
+    ]
+  },
+  {
+    id: 9,
+    hint: "Mysterious is a name: '_i_ Fisto', it sounds.",
+    table: "padawans",
+    expected_sql: "SELECT name FROM padawans WHERE name LIKE '_i_ Fisto';",
+    example_sql: `The _ symbol matches exactly one character, no more, no less.
+
+For example:
+SELECT column_name FROM table_name WHERE column_name LIKE '_a_';`,
+    resulted_table: [
+      { name: "Kit Fisto" }
+    ]
+  },
+  {
+    id: 10,
+    hint: "The average age of Jedi learners, know it you must.",
+    table: "padawans",
+    expected_sql: "SELECT AVG(age) AS average_age FROM padawans;",
+    example_sql: `Aggregate functions calculate values from multiple rows.
+AVG returns the average.
+
+For example:
+SELECT AVG(column_name) FROM table_name;`,
+    resulted_table: [
+      { average_age: 123.5 }
+    ]
+  },
+  {
+    id: 11,
+    hint: "The oldest, who is? Maximum age, find you shall.",
+    table: "padawans",
+    expected_sql: "SELECT MAX(age) AS oldest FROM padawans;",
+    example_sql: `MAX returns the largest value in a column.
+
+For example:
+SELECT MAX(column_name) FROM table_name;`,
+    resulted_table: [
+      { oldest: 477 }
+    ]
+  },
+  {
+    id: 12,
+    hint: "The youngest Padawan, curious you are.",
+    table: "padawans",
+    expected_sql: "SELECT MIN(age) AS youngest FROM padawans;",
+    example_sql: `MIN returns the smallest value in a column.
+
+For example:
+SELECT MIN(column_name) FROM table_name;`,
+    resulted_table: [
+      { youngest: 20 }
+    ]
+  },
+  {
+    id: 13,
+    hint: "Total the ages, for strength in numbers there is.",
+    table: "padawans",
+    expected_sql: "SELECT SUM(age) AS total_age FROM padawans;",
+    example_sql: `SUM adds all values in a numeric column.
+
+For example:
+SELECT SUM(column_name) FROM table_name;`,
+    resulted_table: [
+      { total_age: 987 }
+    ]
+  }
 ];
 
 
