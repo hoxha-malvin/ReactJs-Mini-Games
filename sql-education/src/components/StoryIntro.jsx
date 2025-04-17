@@ -10,7 +10,7 @@ import LeftAside from "./LeftAside";
 import QuestsDialogues from "./QuestsDialogues";
 
 const StoryIntro = () => {
-  const [showStory, setShowStory] = useState(false);
+  const [showStory, setShowStory] = useState(true);
   const [tableIndex, setTableIndex] = useState(0);
   const [showQuestDialogue, setShowQuestDialogue] = useState(true);
   const tasks = data[tableIndex];  
