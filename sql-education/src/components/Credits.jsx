@@ -7,11 +7,11 @@ const Credits = ({onClick}) => {
             <h2 className="text-3xl font-extrabold text-amber-400 tracking-wide mb-4">Credits</h2>
 
             <ul className="list-disc list-inside space-y-2 text-lg text-zinc-200">
-                <li>MAMIDAKIS GEORGE</li>
-                <li>MALVIN HOXHA</li>
-                <li>KIRKALAS PANAGIOTIS</li>
-                <li>PASXALIDIS ANTONIOS</li>
-                <li>PIGGIOS PANAGIOTIS</li>
+                <li>ΜΑΜΙΔΑΚΗΣ ΓΕΩΡΓΙΟΣ</li>
+                <li>ΜΑΛΒΙΝ ΧΟΤΖΑ</li>
+                <li>ΚΙΡΚΑΛΑΣ ΠΑΝΑΓΙΩΤΗΣ</li>
+                <li>ΠΑΣΧΑΛΙΔΗΣ ΑΝΤΩΝΙΟΣ</li>
+                <li>ΠΙΓΓΙΟΣ ΠΑΝΑΓΙΩΤΗΣ</li>
                 <li>
                     <span className="text-amber-300">Music</span> by Luis Humanoide from Pixabay
                 </li>
