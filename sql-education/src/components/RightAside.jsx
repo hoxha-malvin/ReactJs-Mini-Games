@@ -43,7 +43,7 @@ const RightAside = ({tableIndex, tasks, table}) => {
             </div>
             
             <div>
-                <h2 className="text-2xl font-semibold text-amber-400 mb-4">Jedi Data</h2>
+                <h2 className="text-2xl font-semibold text-amber-400 mb-4">padawans table</h2>
                 <table className="w-full table-auto border-collapse text-sm">
                     <thead className="bg-zinc-700 text-amber-300">
                         <tr>
