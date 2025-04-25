@@ -19,7 +19,7 @@ const RightAside = ({tableIndex, tasks, table}) => {
                 <thead className="bg-zinc-700 text-amber-300">
                     <tr>
                     {Object.keys(tasks.resulted_table[0]).map((key) => (
-                        <th key={key} className="border border-zinc-600 sm:px-3 py-2 capitalize">
+                        <th key={key} className="border border-zinc-600 sm:px-3 py-2">
                         {key}
                         </th>
                     ))}
@@ -48,7 +48,7 @@ const RightAside = ({tableIndex, tasks, table}) => {
                     <thead className="bg-zinc-700 text-amber-300">
                         <tr>
                             {Object.keys(table[0]).map((key) => (
-                            <th key={key} className="border border-zinc-600 sm:px-3 py-2 capitalize">
+                            <th key={key} className="border border-zinc-600 sm:px-3 py-2">
                                 {key}
                             </th>
                             ))}
