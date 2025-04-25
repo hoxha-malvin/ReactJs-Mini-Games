@@ -138,7 +138,7 @@ const LeftAside = ({tableIndex, tasks, ChangePage}) => {
                             <thead className="bg-zinc-700 text-amber-300">
                                 <tr>
                                     {Object.keys(userResult[0]).map((key) => (
-                                    <th key={key} className="border sm:py-2 border-zinc-600 sm:px-3 capitalize">
+                                    <th key={key} className="border sm:py-2 border-zinc-600 sm:px-3">
                                         {key}
                                     </th>
                                     ))}
