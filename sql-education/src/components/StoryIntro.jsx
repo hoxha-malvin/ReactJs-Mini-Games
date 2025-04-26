@@ -12,7 +12,11 @@ import QuestsDialogues from "./QuestsDialogues";
 import Credits from "./Credits";
 
 const StoryIntro = () => {
-  const [showStory, setShowStory] = useState(true);
+  const [showStory, setShowStory] = useState(() => {
+    const hasSeenStory = localStorage.getItem('hasSeenStory');
+    return hasSeenStory ? false : true;
+  });
+
   const [tableIndex, setTableIndex] = useState(0);
   const [showQuestDialogue, setShowQuestDialogue] = useState(true);
   const tasks = data[tableIndex];  
@@ -31,11 +35,6 @@ const StoryIntro = () => {
   }
 
   useEffect(() => {
-    const hasSeenStory = localStorage.getItem('hasSeenStory');
-    if (hasSeenStory) {
-      setShowStory(false);
-    }
-
     if (audioRef.current) {
         audioRef.current.play()
         .then(() => {
