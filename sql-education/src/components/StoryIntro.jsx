@@ -31,15 +31,20 @@ const StoryIntro = () => {
   }
 
   useEffect(() => {
-  if (audioRef.current) {
-    audioRef.current.play()
-      .then(() => {
-        setIsPlaying(true);
-      })
-      .catch(() => {
-        console.log('Audio does not respond or autoplay was blocked.');
-        setIsPlaying(false);
-      });
+    const hasSeenStory = localStorage.getItem('hasSeenStory');
+    if (hasSeenStory) {
+      setShowStory(false);
+    }
+
+    if (audioRef.current) {
+        audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch(() => {
+          console.log('Audio does not respond or autoplay was blocked.');
+          setIsPlaying(false);
+    });
   }
 }, []);
 
@@ -81,7 +86,7 @@ const StoryIntro = () => {
       {showCredits && <Credits onClick={() => setShowCredits(false)}/>}
       
       {showStory && (
-        <IntroDialogue onFinish={() => setShowStory(false)} />
+        <IntroDialogue onFinish={() => {localStorage.setItem('hasSeenStory', 'true'); setShowStory(false)}} />
       )}
 
       {!showStory && (
