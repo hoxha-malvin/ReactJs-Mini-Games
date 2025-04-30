@@ -46,7 +46,7 @@ SELECT column_name FROM table_name WHERE condition1 AND condition2;`,
     ]
   },
   {
-    id: 3,
+    id: 4,
     hint: "Togruta or Zabrak — allies from distant worlds.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE species = 'Togruta' OR species = 'Zabrak';",
@@ -61,7 +61,7 @@ SELECT column_name FROM table_name WHERE condition1 OR condition2;`,
     ]
   },
   {
-    id: 4,
+    id: 5,
     hint: "From many species they come — Togruta, Nautolan, Kel Dor.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE species IN ('Togruta', 'Nautolan', 'Kel Dor');",
@@ -77,7 +77,7 @@ SELECT column_name FROM table_name WHERE column_name IN (value1, value2, value3)
     ]
   },
   {
-    id: 5,
+    id: 6,
     hint: "Different, the lightsaber colors are. List them, you must.",
     table: "padawans",
     expected_sql: "SELECT DISTINCT lightsaber_color FROM padawans;",
@@ -94,7 +94,7 @@ SELECT DISTINCT column_name FROM table_name;`,
     ]
   },
   {
-    id: 6,
+    id: 7,
     hint: "Begins with 'Lu', the name must. Seek them, you will.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE name LIKE 'Lu%';",
@@ -108,7 +108,7 @@ SELECT column_name FROM table_name WHERE column_name LIKE 'prefix%';`,
     ]
   },
   {
-    id: 7,
+    id: 8,
     hint: "Ends with 'Ti', their names do. Find them, you must.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE name LIKE '%Ti';",
@@ -121,7 +121,7 @@ SELECT column_name FROM table_name WHERE column_name LIKE '%suffix';`,
     ]
   },
   {
-    id: 8,
+    id: 9,
     hint: "Only one letter hidden, the name has. 'A_soka' it must match.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE name LIKE 'A_soka Tano';",
@@ -134,7 +134,7 @@ SELECT column_name FROM table_name WHERE column_name LIKE 'A_c%';`,
     ]
   },
   {
-    id: 9,
+    id: 10,
     hint: "Mysterious is a name: '_i_ Fisto', it sounds.",
     table: "padawans",
     expected_sql: "SELECT name FROM padawans WHERE name LIKE '_i_ Fisto';",
@@ -147,7 +147,7 @@ SELECT column_name FROM table_name WHERE column_name LIKE '_a_';`,
     ]
   },
   {
-    id: 10,
+    id: 11,
     hint: "The average age of Jedi learners, know it you must.",
     table: "padawans",
     expected_sql: "SELECT AVG(age) AS average_age FROM padawans;",
@@ -161,7 +161,7 @@ SELECT AVG(column_name) FROM table_name;`,
     ]
   },
   {
-    id: 11,
+    id: 12,
     hint: "The oldest, who is? Maximum age, find you shall.",
     table: "padawans",
     expected_sql: "SELECT MAX(age) AS oldest FROM padawans;",
@@ -174,7 +174,7 @@ SELECT MAX(column_name) FROM table_name;`,
     ]
   },
   {
-    id: 12,
+    id: 13,
     hint: "The youngest Padawan, curious you are.",
     table: "padawans",
     expected_sql: "SELECT MIN(age) AS youngest FROM padawans;",
@@ -187,7 +187,7 @@ SELECT MIN(column_name) FROM table_name;`,
     ]
   },
   {
-    id: 13,
+    id: 14,
     hint: "Total the ages, for strength in numbers there is.",
     table: "padawans",
     expected_sql: "SELECT SUM(age) AS total_age FROM padawans;",
