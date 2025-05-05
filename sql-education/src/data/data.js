@@ -32,7 +32,7 @@ SELECT * FROM table_name WHERE column_name <= value;`,
       { id: 9, name: "Yaddle", species: "Yoda's Species", age: 477, lightsaber_color: "Green" }
     ]
   },
-  {
+  /*{
     id: 3,
     hint: "Green blade, and Human — rare, that is.",
     table: "padawans",
@@ -198,7 +198,7 @@ SELECT SUM(column_name) FROM table_name;`,
     resulted_table: [
       { total_age: 987 }
     ]
-  }
+  }*/
 ];
 
 

@@ -3,8 +3,9 @@ import darthVader from '/darth-vader.svg';
 import yoda from '/yoda.svg';
 
 const OutroDialogue = ({ onClose }) => {
+    console.log("in")
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 p-5">
+    <div className="fixed inset-0 flex items-center justify-center z-60 p-5">
       <div className="bg-zinc-900 border border-green-600 rounded-3xl shadow-xl p-8 max-w-xl w-full text-center space-y-4">
         <div className="flex items-center justify-center gap-4">
           <img src={yoda} alt="yoda" className="w-20" />

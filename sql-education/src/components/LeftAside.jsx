@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import initSqlJs from 'sql.js';
 import padawans from '../data/table';
-
-const LeftAside = ({tableIndex, tasks, ChangePage}) => {
+import data from '../data/data';
+const LeftAside = ({tableIndex, tasks, ChangePage, onCompleteLastTask}) => {
 
     const [userSQLMap, setUserSQLMap] = useState({});
     const [isCorrect, setIsCorrect] = useState(null);
@@ -71,10 +71,13 @@ const LeftAside = ({tableIndex, tasks, ChangePage}) => {
     
                 // Compare result sets (could enhance for deep comparison)
                 const isSameResult = JSON.stringify(formatted) === JSON.stringify(expectedFormatted);
-                if (isSameResult && tableIndex === padawans.length - 1 && typeof onCompleteLastTask === 'function') {
+                console.log(isSameResult)
+                console.log(tableIndex)
+                console.log(padawans.length - 1)
+                setIsCorrect(isSameResult);
+                if (isSameResult && tableIndex === data.length - 1) {
                     onCompleteLastTask();
                 }
-                setIsCorrect(isSameResult);
             } else {
                 setUserResult([]);
                 setQueryError("No rows returned.");

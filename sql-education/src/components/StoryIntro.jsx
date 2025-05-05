@@ -116,7 +116,7 @@ const StoryIntro = () => {
           </aside>
         </main>
       )}
-      {showOutro && <OutroDialogue onClose={() => setShowOutro(false)} />}
+      {showOutro && <OutroDialogue onClose={() => {setShowOutro(false), console.log("setShowOutro being triggered");}} />}
     </section>
   );
 };
