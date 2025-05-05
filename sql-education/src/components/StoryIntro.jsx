@@ -8,6 +8,7 @@ import IntroDialogue from "./IntroDialogue";
 import RightAside from "./RightAside";
 import LeftAside from "./LeftAside";
 import QuestsDialogues from "./QuestsDialogues";
+import OutroDialogue from "./OutroDialogue";
 
 import Credits from "./Credits";
 
@@ -16,6 +17,8 @@ const StoryIntro = () => {
     const hasSeenStory = localStorage.getItem('hasSeenStory');
     return hasSeenStory ? false : true;
   });
+
+  const [showOutro, setShowOutro] = useState(false);
 
   const [tableIndex, setTableIndex] = useState(0);
   const [showQuestDialogue, setShowQuestDialogue] = useState(true);
@@ -104,6 +107,7 @@ const StoryIntro = () => {
               tableIndex={tableIndex}
               tasks={tasks}
               ChangePage={ChangePage}
+              onCompleteLastTask={() => setShowOutro(true)}
             />
           </aside>
 
@@ -112,6 +116,7 @@ const StoryIntro = () => {
           </aside>
         </main>
       )}
+      {showOutro && <OutroDialogue onClose={() => setShowOutro(false)} />}
     </section>
   );
 };

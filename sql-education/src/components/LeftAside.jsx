@@ -71,6 +71,9 @@ const LeftAside = ({tableIndex, tasks, ChangePage}) => {
     
                 // Compare result sets (could enhance for deep comparison)
                 const isSameResult = JSON.stringify(formatted) === JSON.stringify(expectedFormatted);
+                if (isSameResult && tableIndex === padawans.length - 1 && typeof onCompleteLastTask === 'function') {
+                    onCompleteLastTask();
+                }
                 setIsCorrect(isSameResult);
             } else {
                 setUserResult([]);
