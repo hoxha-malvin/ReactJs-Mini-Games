@@ -84,7 +84,9 @@ const LeftAside = ({tableIndex, tasks, ChangePage, onCompleteLastTask, gameReset
                 console.log(padawans.length - 1)
                 setIsCorrect(isSameResult);
                 if (isSameResult && tableIndex === data.length - 1) {
-                    onCompleteLastTask();
+                    setTimeout(() => {
+                        onCompleteLastTask();
+                    }, 1500);
                 }
             } else {
                 setUserResult([]);
