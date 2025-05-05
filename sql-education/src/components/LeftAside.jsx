@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import initSqlJs from 'sql.js';
 import padawans from '../data/table';
 import data from '../data/data';
-const LeftAside = ({tableIndex, tasks, ChangePage, onCompleteLastTask}) => {
+const LeftAside = ({tableIndex, tasks, ChangePage, onCompleteLastTask, gameResetTrigger}) => {
 
     const [userSQLMap, setUserSQLMap] = useState({});
     const [isCorrect, setIsCorrect] = useState(null);
@@ -17,7 +17,15 @@ const LeftAside = ({tableIndex, tasks, ChangePage, onCompleteLastTask}) => {
         setQueryError("");
         setUserResult([]);
         setIsCorrect(null);
-      }, [tableIndex, userSQLMap]);
+    }, [tableIndex, userSQLMap]);
+
+    useEffect(() => {
+        setUserSQLMap({});
+        setUserSQL("");
+        setIsCorrect(null);
+        setUserResult([]);
+        setQueryError("");
+    }, [gameResetTrigger]);
 
     useEffect(() => {
         (async () => {
