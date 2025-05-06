@@ -1,11 +1,19 @@
 import { dialogues } from '../data/data';
 import darthVader from '/darth-vader.svg';
 import yoda from '/yoda.svg';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 new Image().src = darthVader;
 new Image().src = yoda;
 
 const IntroDialogue = ({onFinish}) => {
+    const buttonRef = useRef(null);
+    
+    useEffect(() => {
+        if (buttonRef.current) {
+            buttonRef.current.focus();
+        }
+    }, []);
+
     const [step, setStep] = useState(0);
     const current = dialogues[step];
 
@@ -32,6 +40,7 @@ const IntroDialogue = ({onFinish}) => {
                     </p>
                 </div>
                 <button
+                    ref={buttonRef}
                     onClick={handleContinue}
                     className="px-6 py-2 bg-red-600 text-white font-semibold rounded-xl shadow-lg hover:bg-red-700 transition-all duration-200 cursor-pointer"
                 >
