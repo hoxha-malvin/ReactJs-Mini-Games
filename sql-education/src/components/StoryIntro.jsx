@@ -8,6 +8,7 @@ import IntroDialogue from "./IntroDialogue";
 import RightAside from "./RightAside";
 import LeftAside from "./LeftAside";
 import QuestsDialogues from "./QuestsDialogues";
+import OutroDialogue from "./OutroDialogue";
 
 import Credits from "./Credits";
 
@@ -17,10 +18,13 @@ const StoryIntro = () => {
     return hasSeenStory ? false : true;
   });
 
+  const [showOutro, setShowOutro] = useState(false);
+
   const [tableIndex, setTableIndex] = useState(0);
   const [showQuestDialogue, setShowQuestDialogue] = useState(true);
   const tasks = data[tableIndex];  
   const [showCredits, setShowCredits] = useState(false);
+  const [gameResetTrigger, setGameResetTrigger] = useState(false);
 
   const [isPlaying, setIsPlaying] = useState(true);
   const audioRef = useRef(null);
@@ -40,13 +44,19 @@ const StoryIntro = () => {
         .then(() => {
           setIsPlaying(true);
         })
-        .catch(() => {
-          console.log('Audio does not respond or autoplay was blocked.');
-          setIsPlaying(false);
-    });
-  }
-}, []);
+          .catch(() => {
+            console.log('Audio does not respond or autoplay was blocked.');
+            setIsPlaying(false);
+      });
+    }
+  }, []);
 
+  useEffect(() => {
+    // Prevent IntroDialogue from showing again on reset
+    if (gameResetTrigger) {
+      setShowStory(false);
+    }
+  }, [gameResetTrigger]);
 
   const toggleAudio = () => {
     if (!audioRef.current) return;
@@ -85,10 +95,13 @@ const StoryIntro = () => {
       {showCredits && <Credits onClick={() => setShowCredits(false)}/>}
       
       {showStory && (
-        <IntroDialogue onFinish={() => {localStorage.setItem('hasSeenStory', 'true'); setShowStory(false)}} />
+        <IntroDialogue onFinish={() => {
+          localStorage.setItem('hasSeenStory', 'true');
+          setShowStory(false);
+        }} />
       )}
 
-      {!showStory && (
+      {!showStory && !showOutro && (
         <main className="w-full min-h-screen flex flex-col lg:flex-row gap-4 p-6">
 
           {showQuestDialogue && (
@@ -104,6 +117,11 @@ const StoryIntro = () => {
               tableIndex={tableIndex}
               tasks={tasks}
               ChangePage={ChangePage}
+              onCompleteLastTask={() => {
+                setShowOutro(true);
+                setShowStory(false); // prevent re-showing the intro
+              }}
+              gameResetTrigger={gameResetTrigger}
             />
           </aside>
 
@@ -111,6 +129,16 @@ const StoryIntro = () => {
             <RightAside tableIndex={tableIndex} tasks={tasks} table={table}/>
           </aside>
         </main>
+      )}
+      {showOutro && (
+        <OutroDialogue
+          onClose={() => {
+            setShowOutro(false);
+            setTableIndex(0);
+            setShowQuestDialogue(true);
+            setGameResetTrigger(prev => !prev); // force refresh logic
+          }}
+        />
       )}
     </section>
   );

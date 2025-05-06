@@ -2,7 +2,8 @@ import React from 'react'
 
 const Credits = ({onClick}) => {
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center z-51">
+    <div className="fixed bg-black/50 backdrop-blur-sm inset-0 z-51">
+        <div className="inset-0 min-h-lvh flex items-center justify-center z-49">
         <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 text-white p-8 rounded-3xl shadow-2xl max-w-xl w-full border border-zinc-700">
             <h2 className="text-3xl font-extrabold text-amber-400 tracking-wide mb-4">Credits</h2>
 
@@ -28,6 +29,7 @@ const Credits = ({onClick}) => {
                     Close
                 </button>
             </div>
+        </div>
         </div>
     </div>
   )

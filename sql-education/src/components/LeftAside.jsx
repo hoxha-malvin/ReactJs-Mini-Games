@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import initSqlJs from 'sql.js';
 import padawans from '../data/table';
-
-const LeftAside = ({tableIndex, tasks, ChangePage}) => {
+import data from '../data/data';
+const LeftAside = ({tableIndex, tasks, ChangePage, onCompleteLastTask, gameResetTrigger}) => {
 
     const [userSQLMap, setUserSQLMap] = useState({});
     const [isCorrect, setIsCorrect] = useState(null);
@@ -17,7 +17,15 @@ const LeftAside = ({tableIndex, tasks, ChangePage}) => {
         setQueryError("");
         setUserResult([]);
         setIsCorrect(null);
-      }, [tableIndex, userSQLMap]);
+    }, [tableIndex, userSQLMap]);
+
+    useEffect(() => {
+        setUserSQLMap({});
+        setUserSQL("");
+        setIsCorrect(null);
+        setUserResult([]);
+        setQueryError("");
+    }, [gameResetTrigger]);
 
     useEffect(() => {
         (async () => {
@@ -46,27 +54,52 @@ const LeftAside = ({tableIndex, tasks, ChangePage}) => {
         })();
       }, []);
     
-    const handleRunSQL = () => {
+      const handleRunSQL = () => {
         try {
             const result = db.exec(userSQL);
-
+    
             if (result.length > 0) {
-            const { columns, values } = result[0];
-            const formatted = values.map(row =>
-                Object.fromEntries(row.map((val, i) => [columns[i], val]))
-            );
-            setIsCorrect(userSQL.trim().toLowerCase() === tasks.expected_sql.trim().toLowerCase());
-            setUserResult(formatted);
-            setQueryError("");
+                const { columns, values } = result[0];
+                const formatted = values.map(row =>
+                    Object.fromEntries(row.map((val, i) => [columns[i], val]))
+                );
+                setUserResult(formatted);
+                setQueryError("");
+    
+                // Run the expected SQL as well and compare results
+                const expected = db.exec(tasks.expected_sql);
+                let expectedFormatted = [];
+    
+                if (expected.length > 0) {
+                    const { columns: expCols, values: expVals } = expected[0];
+                    expectedFormatted = expVals.map(row =>
+                        Object.fromEntries(row.map((val, i) => [expCols[i], val]))
+                    );
+                }
+    
+                // Compare result sets (could enhance for deep comparison)
+                const isSameResult = JSON.stringify(formatted) === JSON.stringify(expectedFormatted);
+                console.log(isSameResult)
+                console.log(tableIndex)
+                console.log(padawans.length - 1)
+                setIsCorrect(isSameResult);
+                if (isSameResult && tableIndex === data.length - 1) {
+                    setTimeout(() => {
+                        onCompleteLastTask();
+                    }, 1500);
+                }
             } else {
-            setUserResult([]);
-            setQueryError("No rows returned.");
+                setUserResult([]);
+                setQueryError("No rows returned.");
+                setIsCorrect(false);
             }
         } catch (err) {
             setUserResult([]);
             setQueryError("Invalid SQL query.");
-    }
+            setIsCorrect(false);
+        }
     };
+    
 
     return (
         <>
