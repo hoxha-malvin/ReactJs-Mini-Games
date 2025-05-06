@@ -26,7 +26,7 @@ const StoryIntro = () => {
   const [showCredits, setShowCredits] = useState(false);
   const [gameResetTrigger, setGameResetTrigger] = useState(false);
 
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   const ChangePage = (direction) => {
@@ -39,20 +39,6 @@ const StoryIntro = () => {
   }
 
   useEffect(() => {
-    if (audioRef.current) {
-        audioRef.current.play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-          .catch(() => {
-            console.log('Audio does not respond or autoplay was blocked.');
-            setIsPlaying(false);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    // Prevent IntroDialogue from showing again on reset
     if (gameResetTrigger) {
       setShowStory(false);
     }
@@ -60,13 +46,17 @@ const StoryIntro = () => {
 
   const toggleAudio = () => {
     if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch(() => {});
-    }
-    setIsPlaying(!isPlaying);
+  
+    setIsPlaying((prev) => {
+      if (prev) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(() => {});
+      }
+      return !prev;
+    });
   };
+  
 
   return (
     <section className="w-full min-h-screen bg-gradient-to-b text-white bg-black/50 backdrop-blur-sm">
