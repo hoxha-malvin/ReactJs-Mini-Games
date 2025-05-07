@@ -17,7 +17,7 @@ SELECT column_name FROM table_name WHERE column_name < value;`,
       { name: "Yaddle" }
     ]
   },
-  /*{
+  {
     id: 2,
     hint: "Masters, 40 years or more, they must be.",
     table: "padawans",
@@ -198,7 +198,7 @@ SELECT SUM(column_name) FROM table_name;`,
     resulted_table: [
       { total_age: 987 }
     ]
-  }*/
+  }
 ];
 
 
