@@ -237,7 +237,7 @@ export const dialogues = [
 export const outroDialogues = [
   {
     speaker: "vader",
-    text: "Impossible... You broke through the queries. Escaped, you have.",
+    text: "Impossible... You broke through the queries. You escaped.",
   },
   {
     speaker: "yoda",
