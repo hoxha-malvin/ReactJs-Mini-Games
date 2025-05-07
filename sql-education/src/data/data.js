@@ -234,4 +234,36 @@ export const dialogues = [
   },
 ];
 
+export const outroDialogues = [
+  {
+    speaker: "vader",
+    text: "Impossible... You broke through the queries. Escaped, you have.",
+  },
+  {
+    speaker: "yoda",
+    text: "Through knowledge and code, free you are.",
+  },
+  {
+    speaker: "vader",
+    text: "The data bends to your will. But know this... the dark side lurks in lazy joins.",
+  },
+  {
+    speaker: "yoda",
+    text: "Clever with clauses, precise with logic — a true master, you’ve become.",
+  },
+  {
+    speaker: "vader",
+    text: "This prison can hold you no longer. But the database... is endless.",
+  },
+  {
+    speaker: "yoda",
+    text: "Always more to learn, there is. But this challenge, conquered you have.",
+  },
+  {
+    speaker: "yoda",
+    text: "May the source be with you, always."
+  }
+];
+
+
 export default data;
