@@ -61,7 +61,7 @@ const StoryIntro = () => {
   return (
     <section className="w-full min-h-screen bg-gradient-to-b text-white bg-black/50 backdrop-blur-sm">
       <div className="fixed top-0 right-0 flex items-center z-51">
-        <audio ref={audioRef} src="/music.mp3" loop autoPlay/>
+        <audio ref={audioRef} src="/music.mp3" loop/>
         <div>
           <button
             onClick={toggleAudio}
