@@ -66,7 +66,6 @@ const LeftAside = ({tableIndex, tasks, ChangePage, onCompleteLastTask, gameReset
                 setUserResult(formatted);
                 setQueryError("");
     
-                // Run the expected SQL as well and compare results
                 const expected = db.exec(tasks.expected_sql);
                 let expectedFormatted = [];
     
@@ -77,11 +76,7 @@ const LeftAside = ({tableIndex, tasks, ChangePage, onCompleteLastTask, gameReset
                     );
                 }
     
-                // Compare result sets (could enhance for deep comparison)
                 const isSameResult = JSON.stringify(formatted) === JSON.stringify(expectedFormatted);
-                console.log(isSameResult)
-                console.log(tableIndex)
-                console.log(padawans.length - 1)
                 setIsCorrect(isSameResult);
                 if (isSameResult && tableIndex === data.length - 1) {
                     setTimeout(() => {

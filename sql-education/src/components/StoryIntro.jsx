@@ -71,7 +71,6 @@ const StoryIntro = () => {
           </button>
         </div>
 
-        {/* Credits Button */}
         <div>
           <button
             onClick={() => setShowCredits(true)}
@@ -109,7 +108,7 @@ const StoryIntro = () => {
               ChangePage={ChangePage}
               onCompleteLastTask={() => {
                 setShowOutro(true);
-                setShowStory(false); // prevent re-showing the intro
+                setShowStory(false);
               }}
               gameResetTrigger={gameResetTrigger}
             />
@@ -126,7 +125,7 @@ const StoryIntro = () => {
             setShowOutro(false);
             setTableIndex(0);
             setShowQuestDialogue(true);
-            setGameResetTrigger(prev => !prev); // force refresh logic
+            setGameResetTrigger(prev => !prev);
           }}
         />
       )}

@@ -25,13 +25,12 @@ const OutroDialogue = ({onClose}) => {
       const nextStep = step + 1;
       setStep(nextStep);
       if (nextStep === outroDialogues.length - 1) {
-        setFinishedButton(true); // Show "Finish" on last dialogue
+        setFinishedButton(true);
       }
     } else {
-      onClose(); // Or onClose(), depending on what you intend
+      onClose();
     }
   };
-  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 p-5">
