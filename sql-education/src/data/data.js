@@ -198,10 +198,86 @@ SELECT SUM(column_name) FROM table_name;`,
     resulted_table: [
       { total_age: 987 }
     ]
-  }
+  },{
+  id: 15,
+  hint: "Padawans not Human, reveal them you must.",
+  table: "padawans",
+  expected_sql: "SELECT name FROM padawans WHERE species != 'Human';",
+  example_sql: `The != operator means "not equal to" in SQL.
+
+For example:
+SELECT column_name FROM table_name WHERE column_name != 'value';`,
+  resulted_table: [
+    { name: "Ahsoka Tano" },
+    { name: "Kit Fisto" },
+    { name: "Plo Koon" },
+    { name: "Shaak Ti" },
+    { name: "Eeth Koth" },
+    { name: "Yaddle" }
+  ]
+},
+{
+  id: 16,
+  hint: "Top 3 oldest, ranked they are.",
+  table: "padawans",
+  expected_sql: "SELECT name FROM padawans ORDER BY age DESC LIMIT 3;",
+  example_sql: `ORDER BY lets you sort rows. Use DESC for descending, ASC for ascending.
+LIMIT restricts how many rows you get.
+
+For example:
+SELECT column FROM table ORDER BY column DESC LIMIT number;`,
+  resulted_table: [
+    { name: "Yaddle" },
+    { name: "Plo Koon" },
+    { name: "Kit Fisto" }
+  ]
+},
+{
+  id: 17,
+  hint: "Names contain 'Sky', they do. Search within, you must.",
+  table: "padawans",
+  expected_sql: "SELECT name FROM padawans WHERE name LIKE '%Sky%';",
+  example_sql: `Use % with LIKE to search anywhere in a string.
+
+For example:
+SELECT column_name FROM table_name WHERE column_name LIKE '%part%';`,
+  resulted_table: [
+    { name: "Luke Skywalker" }
+  ]
+},
+{
+  id: 18,
+  hint: "Species, group by them. Count, you will.",
+  table: "padawans",
+  expected_sql: "SELECT species, COUNT(*) AS total FROM padawans GROUP BY species;",
+  example_sql: `GROUP BY lets you group rows by a column.
+COUNT(*) counts how many rows are in each group.
+
+For example:
+SELECT column, COUNT(*) FROM table GROUP BY column;`,
+  resulted_table: [
+    { species: "Human", total: 1 },
+    { species: "Togruta", total: 2 },
+    { species: "Nautolan", total: 1 },
+    { species: "Kel Dor", total: 1 },
+    { species: "Zabrak", total: 1 },
+    { species: "Yoda's Species", total: 1 }
+  ]
+},
+{
+  id: 19,
+  hint: "No lightsaber, some have. Reveal them, you will.",
+  table: "padawans",
+  expected_sql: "SELECT name FROM padawans WHERE lightsaber_color = 'None';",
+  example_sql: `You can check for specific values, even if they mean absence.
+
+For example:
+SELECT column_name FROM table_name WHERE column_name = 'None';`,
+  resulted_table: [
+    { name: "Eeth Koth" }
+  ]
+}
 ];
-
-
 
 export const dialogues = [
   {
